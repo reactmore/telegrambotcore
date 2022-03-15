@@ -1,0 +1,34 @@
+{
+    "name": "reactmore/telegrambotcore",
+    "description": "Telegram Bot library for Codeigniter 4",
+    "homepage": "https://github.com/reactmore/telegrambotcore",
+    "authors": [
+        {
+            "name": "reactmore",
+            "homepage": "https://github.com/reactmore",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "dragonmantank/cron-expression": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "8.5.*",
+        "codeigniter4/framework": "^4.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reactmore\\TelegramBotCore\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Support\\": "tests/_support"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
