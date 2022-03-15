@@ -57,6 +57,13 @@ class getUpdatesCLI extends BaseCommand
             $this->getConfig();
             $telegram = new Telegram($this->config->ApiKey, $this->config->bot_username);
             $telegram->useGetUpdatesWithoutDatabase();
+            // Enable admin users
+            $telegram->enableAdmins($this->config->adminID);
+
+            if ($this->config->botmysql['enabled']) {
+                $telegram->enableMySql($this->config->botmysql['data']);
+            }
+
             $server_response = $telegram->handleGetUpdates();
 
             if ($server_response->isOk()) {
@@ -74,11 +81,12 @@ class getUpdatesCLI extends BaseCommand
             CLI::newLine(1);
             CLI::write($e->getMessage(), 'white', 'red');
             CLI::newLine(1);
-            echo $e->getMessage();
+            echo $e;
         } catch (TelegramLogException $e) {
             CLI::newLine(1);
             CLI::write($e->getMessage(), 'white', 'red');
             CLI::newLine(1);
+            echo $e;
         }
     }
 }
