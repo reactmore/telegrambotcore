@@ -6,51 +6,28 @@ use CodeIgniter\Config\BaseConfig;
 
 class TelegramBotCore extends BaseConfig
 {
-	/**
-	 * Directory
-	 */
-	public $FilePath = WRITEPATH . 'TelegramBotCore/';
 
-	/**
-	 * Filename setting
-	 */
-	public $FileName = 'core';
-
-	/**
-	 * Set true if you want save logs
-	 */
-	public $logPerformance = false;
-
-	/*
+    /*
     |--------------------------------------------------------------------------
-    | Log Saving Method
+    | Required 
     |--------------------------------------------------------------------------
     |
-    | Set to specify the REST API requires to be logged in
-    |
-    | 'file'   Save in file
-    | 'database'  Save in database
+    | Required Configurations
     |
     */
-	public $logSavingMethod = 'file';
 
-	/*
-    |--------------------------------------------------------------------------
-    | Database Group
-    |--------------------------------------------------------------------------
-    |
-    | Connect to a database group for logging, etc.
-    |
-    */
-	public $databaseGroup = 'default';
+    public $ApiKey =  '';
 
-	/*
-    |--------------------------------------------------------------------------
-    | Cronjob Table Name
-    |--------------------------------------------------------------------------
-    |
-    | The table name in your database that stores cronjobs
-    |
-    */
-	public $tableName = 'cronjob';
+    public $bot_username = '';
+
+    public $hook_url = 'false';
+
+    public function init($schedule)
+    {
+        // $schedule->command('foo:bar')->everyMinute();
+
+        // $schedule->shell('cp foo bar')->daily( '11:00 pm' );
+
+        // $schedule->call( function() { do something.... } )->everyMonday()->named( 'foo' )
+    }
 }

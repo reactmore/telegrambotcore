@@ -11,32 +11,15 @@ use CodeIgniter\CLI\CLI;
  */
 class Publish extends BaseCommand
 {
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
+    protected $group        = 'Telegram';
+    protected $arguments    = [];
+    protected $options         = [];
+    protected $sourcePath;
     protected $name = 'botcore:publish';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
     protected $description = 'Publish the botcore runner.';
-
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
     protected $usage = 'botcore:publish';
 
-    /**
-     * Enables task running
-     *
-     * @param array $params
-     */
+
     public function run(array $params)
     {
         $this->determineSourcePath();
@@ -44,6 +27,7 @@ class Publish extends BaseCommand
         // Config
         if (CLI::prompt('Publish Config file?', ['y', 'n']) == 'y') {
             $this->publishConfig();
+            $this->createCustomDir("Telegram/Commands");
         }
     }
 
@@ -91,6 +75,34 @@ class Publish extends BaseCommand
 
         try {
             write_file($appPath . $path, $content);
+        } catch (\Exception $e) {
+            $this->showError($e);
+            exit();
+        }
+
+        $path = str_replace($appPath, '', $path);
+
+        CLI::write(CLI::color('  created: ', 'green') . $path);
+    }
+
+    /**
+     * Write a file, catching any exceptions and showing a
+     * nicely formatted error.
+     *
+     * @param string $path
+     * @param string $content
+     */
+    protected function createCustomDir(string $path)
+    {
+        $config = new Autoload();
+        $appPath = $config->psr4[APP_NAMESPACE];
+
+        $directory = dirname($appPath . $path);
+
+        try {
+            if (!is_dir($directory)) {
+                mkdir($directory);
+            }
         } catch (\Exception $e) {
             $this->showError($e);
             exit();
