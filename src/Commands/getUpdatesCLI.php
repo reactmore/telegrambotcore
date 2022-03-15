@@ -42,30 +42,43 @@ class getUpdatesCLI extends BaseCommand
 
         CLI::newLine(1);
         CLI::write('**** Running BOT ****', 'white', 'green');
-        $this->bot();
+        while (1) {
+            sleep(4);
+            $this->bot();
+        }
+
         CLI::newLine(1);
     }
 
     protected function bot()
     {
+
         try {
             $this->getConfig();
             $telegram = new Telegram($this->config->ApiKey, $this->config->bot_username);
-
+            $telegram->useGetUpdatesWithoutDatabase();
             $server_response = $telegram->handleGetUpdates();
 
             if ($server_response->isOk()) {
                 $update_count = count($server_response->getResult());
-                echo date('Y-m-d H:i:s') . ' - Processed ' . $update_count . ' updates';
+                CLI::newLine(1);
+                CLI::write(date('Y-m-d H:i:s') . ' - Processed ' . $update_count . ' updates', 'white', 'green');
+                CLI::newLine(1);
+                CLI::write($server_response, 'white', 'black');
             } else {
-                echo date('Y-m-d H:i:s') . ' - Failed to fetch updates' . PHP_EOL;
-                echo $server_response->printError();
+                CLI::newLine(1);
+                CLI::write($server_response, 'white', 'red');
+                CLI::newLine(1);
             }
-        } catch (TelegramException $e) {
-            TelegramLog::error($e);
-            // echo $e;
+        } catch (TelegramException $e) {;
+            CLI::newLine(1);
+            CLI::write($e->getMessage(), 'white', 'red');
+            CLI::newLine(1);
+            echo $e->getMessage();
         } catch (TelegramLogException $e) {
-            // echo $e;
+            CLI::newLine(1);
+            CLI::write($e->getMessage(), 'white', 'red');
+            CLI::newLine(1);
         }
     }
 }

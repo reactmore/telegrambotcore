@@ -16,18 +16,11 @@ class TelegramBotCore extends BaseConfig
     |
     */
 
-    public $ApiKey =  '';
-
-    public $bot_username = '';
-
+    public $ApiKey =  '1971664840:AAFFwouWA_qTbhy7gnTwfmu5dlQPXExuNYY';
+    public $bot_username = 'reactmorestarter_bot';
     public $hook_url = 'false';
 
     public function init($schedule)
     {
-        // $schedule->command('foo:bar')->everyMinute();
-
-        // $schedule->shell('cp foo bar')->daily( '11:00 pm' );
-
-        // $schedule->call( function() { do something.... } )->everyMonday()->named( 'foo' )
     }
 }
